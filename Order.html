@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Devine Shisa Nyama – Order</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Work+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F3EFEA;--card:#fff;--ink:#211D1A;--mute:#6B625B;--coal:#211D1A;--ember:#F0500F;--gold:#FFB627;--line:#DDD5CC;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171412;--card:#242019;--ink:#F3EFEA;--mute:#A99F95;--coal:#0E0C0B;--line:#3A342D}}
+:root[data-theme="dark"]{--bg:#171412;--card:#242019;--ink:#F3EFEA;--mute:#A99F95;--coal:#0E0C0B;--line:#3A342D}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 'Work Sans',system-ui,sans-serif;padding-bottom:88px}
+h1,h2,h3{font-family:'Archivo Black','Work Sans',system-ui,sans-serif;font-weight:400;margin:0}
+header{background:var(--coal);color:#fff;padding:24px 18px 18px;border-bottom:5px solid var(--ember)}
+header h1{font-size:30px;line-height:1.05}
+header p{margin:6px 0 0;color:#CFC6BC;font-size:14px}
+.open{display:inline-block;margin-top:10px;padding:4px 10px;border-radius:99px;font-size:13px;font-weight:700;background:var(--gold);color:#211D1A}
+.open.closed{background:#5A4F47;color:#fff}
+main{max-width:640px;margin:0 auto;padding:16px}
+.cats{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px}
+.cats button{white-space:nowrap;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:9px 15px;border-radius:99px;font:600 14px 'Work Sans',sans-serif}
+.cats button.on{background:var(--ember);border-color:var(--ember);color:#fff}
+.item{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px;display:flex;gap:12px;align-items:center}
+.item .t{flex:1;min-width:0}.item h3{font-size:17px}
+.item p{margin:3px 0 6px;color:var(--mute);font-size:14px}
+.price{font-weight:700}
+button{font-family:inherit;cursor:pointer}
+.add{border:0;border-radius:10px;background:var(--ember);color:#fff;padding:10px 16px;font-weight:700;font-size:15px}
+.qty{display:flex;align-items:center;gap:10px}
+.qty button{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:18px;font-weight:700}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.build{border:2px dashed var(--ember);background:var(--card);border-radius:12px;padding:16px;margin-bottom:12px}
+.build h3{font-size:18px}
+.chk{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:16px}
+.chk input{width:22px;height:22px;accent-color:var(--ember)}
+.chk span:last-child{color:var(--mute);margin-right:10px;margin-left:auto}
+.bar{position:fixed;left:0;right:0;bottom:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--line)}
+.bar button,.primary{display:flex;justify-content:space-between;width:100%;max-width:608px;margin:0 auto;border:0;border-radius:12px;background:var(--ember);color:#fff;padding:15px 18px;font-weight:700;font-size:16px}
+.primary{margin-top:14px;justify-content:center;max-width:none}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:12px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:6px 0}
+.row small{display:block;color:var(--mute)}
+.row.total{border-top:1px solid var(--line);margin-top:6px;padding-top:12px;font-weight:700;font-size:18px}
+label.l{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
+input[type=text],input[type=tel],textarea{width:100%;padding:12px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:16px 'Work Sans',sans-serif}
+.seg{display:flex;gap:8px}.seg button{flex:1;padding:12px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font-weight:600;font-size:15px}
+.seg button.on{background:var(--coal);border-color:var(--coal);color:#fff}
+.ghost{background:none;border:0;color:var(--mute);font-weight:600;font-size:14px;padding:8px 0}
+.rm{background:none;border:0;color:var(--ember);font-size:13px;font-weight:600;padding:0}
+.err{color:var(--ember);font-weight:600;font-size:14px;margin-top:8px}
+.note{color:var(--mute);font-size:13px;margin:8px 0 0}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<header>
+  <h1>Devine Shisa Nyama</h1>
+  <p>30 Pretorius, Dagbreek, Welkom</p>
+  <span class="open" id="open"></span>
+  <p>Trading hours: Monday to Saturday, 08:00 to 19:00</p>
+</header>
+<main id="app"></main>
+<div class="bar hidden" id="bar"><button id="cartBtn"></button></div>
+
+<script>
+/* ---- Edit these to change the shop ---- */
+const PHONE='27607639734';
+const MENU=[
+{id:'cortez',c:'Kota',n:'Cortez',d:'Chips, polony, cheese, egg, russian, atchaar/sauces',p:36},
+{id:'air',c:'Kota',n:'Air Forces',d:'Chips, polony, cheese, egg, vienna, russian, atchaar/sauces',p:45},
+{id:'diesel',c:'Kota',n:'Diesel',d:'Chips, polony, cheese, egg, rib patty, vienna, russian, atchaar/sauces',p:105},
+{id:'pork',c:'Plates',n:'Pork plate',d:'Quarter leg, wors & pork rasher',p:85},
+{id:'rib',c:'Plates',n:'Rib plate',d:'Wors, short-rib & pork rasher',p:95},
+{id:'chicken',c:'Plates',n:'Full chicken plate',d:'Full chicken & pap',p:90},
+{id:'skopo',c:'Skopo & Ditlhakwana',n:'Skopo',d:'Sheep head',p:80},
+{id:'dit',c:'Skopo & Ditlhakwana',n:'Ditlhakwana',d:'4 pork trotters',p:50},
+{id:'ditp',c:'Skopo & Ditlhakwana',n:'Ditlhakwana plate',d:'4 pork trotters with pap',p:60}];
+// Custom kota prices are placeholders: set your real prices here
+const BASE=15;
+const FILL=[['Polony',3],['Cheese',4],['Egg',4],['Vienna',8],['Russian',8],['Rib patty',45]];
+const SAUCE=['Atchaar','Chutney','Mayo','Hot sauce'];
+const CATS=['Kota','Plates','Skopo & Ditlhakwana'];
+/* --------------------------------------- */
+const $=s=>document.querySelector(s);
+function shop(){
+  const p=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{timeZone:'Africa/Johannesburg',weekday:'short',hour:'numeric',minute:'numeric',hourCycle:'h23'}).formatToParts(new Date()).map(x=>[x.type,x.value]));
+  const day=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(p.weekday),h=+p.hour+(+p.minute)/60;
+  const open=day!==0&&h>=8&&h<19;
+  let t='Open now · until 7PM';
+  if(!open)t=(day===0||(day===6&&h>=19))?'Closed · opens Monday 8AM':(h<8?'Closed now · opens 8AM':'Closed now · opens tomorrow 8AM');
+  return{open,t};
+}
+const CLOSED_MSG='We are closed right now. Orders can only be placed Monday to Saturday, 08:00 to 19:00.';
+const R=n=>'R'+(Number.isInteger(n)?n:n.toFixed(2));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let S={cat:'Kota',cart:[],checkout:false,mode:'Collection',err:'',f:{nm:'',ph:'',ad:'',nt:''},sel:{fill:[],sauce:[]}};
+const total=()=>S.cart.reduce((a,l)=>a+l.p*l.q,0);
+const count=()=>S.cart.reduce((a,l)=>a+l.q,0);
+function qtyOf(key){const l=S.cart.find(x=>x.key===key);return l?l.q:0}
+function change(key,d,name,p,desc){
+  if(d>0&&!shop().open)return render();
+  let l=S.cart.find(x=>x.key===key);
+  if(!l&&d>0){S.cart.push({key,n:name,p,q:1,d:desc||''})}
+  else if(l){l.q+=d;if(l.q<=0)S.cart=S.cart.filter(x=>x!==l)}
+  render();
+}
+function menuView(){
+  const dis=shop().open?'':' disabled';
+  const items=MENU.filter(m=>m.c===S.cat).map(m=>{const q=qtyOf(m.id);
+    return `<div class="item"><div class="t"><h3>${m.n}</h3><p>${m.d}</p><span class="price">${R(m.p)}</span></div>`+
+    (q?`<div class="qty"><button aria-label="Remove one ${m.n}" onclick="change('${m.id}',-1)">−</button><b>${q}</b><button aria-label="Add one ${m.n}" onclick="change('${m.id}',1,'${m.n}',${m.p})">+</button></div>`
+      :`<button class="add"${dis} onclick="change('${m.id}',1,'${m.n}',${m.p})">Add</button>`)+`</div>`}).join('');
+  return `<div class="cats">${CATS.map(c=>`<button class="${c===S.cat?'on':''}" onclick="S.cat='${c}';render()">${c}</button>`).join('')}</div>`+
+    (shop().open?'':`<div class="panel"><b>We are closed.</b> Ordering opens Monday to Saturday, 08:00 to 19:00.</div>`)+(S.cat==='Kota'?builder():'')+items;
+}
+function builder(){
+  const {fill,sauce}=S.sel;
+  const price=BASE+FILL.filter(f=>fill.includes(f[0])).reduce((a,f)=>a+f[1],0);
+  return `<div class="build"><h3>Build your own kota</h3><p class="note" style="margin:4px 0 6px">Chips and bread included (${R(BASE)}). Pick your fillings.</p>`+
+  FILL.map(f=>`<label class="chk"><span>${f[0]}</span><span>+${R(f[1])}</span><input type="checkbox" ${fill.includes(f[0])?'checked':''} onchange="tog('fill','${f[0]}')"></label>`).join('')+
+  `<p style="margin:12px 0 0;font-weight:600">Sauces (free)</p>`+
+  SAUCE.map(s=>`<label class="chk"><span>${s}</span><input type="checkbox" ${sauce.includes(s)?'checked':''} onchange="tog('sauce','${s}')"></label>`).join('')+
+  `<button class="primary"${shop().open?'':' disabled'} onclick="addCustom()">Add custom kota · ${R(price)}</button></div>`;
+}
+function tog(k,v){const a=S.sel[k];const i=a.indexOf(v);i<0?a.push(v):a.splice(i,1);render()}
+function addCustom(){
+  if(!shop().open)return render();
+  const {fill,sauce}=S.sel;
+  const p=BASE+FILL.filter(f=>fill.includes(f[0])).reduce((a,f)=>a+f[1],0);
+  const d='Chips'+(fill.length?', '+fill.join(', '):'')+(sauce.length?' | Sauces: '+sauce.join(', '):' | No sauce');
+  const key='custom:'+d;
+  change(key,1,'Custom kota',p,d);
+  S.sel={fill:[],sauce:[]};render();
+}
+function checkoutView(){
+  const lines=S.cart.map(l=>`<div class="row"><div>${l.q} × ${l.n}${l.d&&l.key.startsWith('custom')?`<small>${esc(l.d)}</small>`:''}<button class="rm" onclick="change('${l.key.replace(/'/g,"\\'")}',-${l.q})">Remove</button></div><b>${R(l.p*l.q)}</b></div>`).join('');
+  return `<button class="ghost" onclick="keep();S.checkout=false;render()">‹ Back to menu</button>
+  <div class="panel"><h2 style="font-size:20px">Your order</h2>${lines}<div class="row total"><span>Total</span><span>${R(total())}</span></div>
+</div>
+  <div class="panel"><h2 style="font-size:20px">Your details</h2>
+  <label class="l" for="nm">Name</label><input type="text" id="nm" autocomplete="name">
+  <label class="l" for="ph">Phone number</label><input type="tel" id="ph" autocomplete="tel">
+  <p class="note" style="margin-top:12px"><b>Collection only.</b> Pick up at 30 Pretorius, Dagbreek, Welkom. No deliveries yet.</p>
+  <label class="l" for="nt">Notes (optional)</label><textarea id="nt" rows="2"></textarea>
+  ${S.err?`<div class="err" role="alert">${S.err}</div>`:''}
+  <button class="primary" onclick="send()">Send order on WhatsApp</button>
+  <p class="note">This opens WhatsApp to +${PHONE.replace(/^27/,'27 ')} with your order filled in. Tap send there to place it.</p></div>`;
+}
+function keep(){['nm','ph','ad','nt'].forEach(k=>{const e=document.getElementById(k);if(e)S.f[k]=e.value})}
+function send(){
+  keep();const f=S.f;
+  if(!shop().open)return fail(CLOSED_MSG);
+  if(!f.nm.trim())return fail('Enter your name.');
+  if(f.ph.replace(/\D/g,'').length<9)return fail('Enter a phone number we can reach you on.');
+  let m=`Hello Devine, I would like to place an order.\n\n`+
+    S.cart.map(l=>`${l.q} x ${l.n} (${R(l.p*l.q)})`+(l.key.startsWith('custom')?`\n   ${l.d}`:'')).join('\n')+
+    `\n\nTotal: ${R(total())}\nCollection`+
+    `\nName: ${f.nm.trim()}\nPhone: ${f.ph.trim()}`+(f.nt.trim()?`\nNotes: ${f.nt.trim()}`:'');
+  const u=`https://wa.me/${PHONE}?text=${encodeURIComponent(m)}`;
+  if(!window.open(u,'_blank'))location.href=u;
+}
+function fail(t){S.err=t;render()}
+function render(){
+  const st=shop(),b=$('#open');b.textContent=st.t;b.classList.toggle('closed',!st.open);
+  const a=$('#app');
+  if(S.checkout&&!count())S.checkout=false;
+  a.innerHTML=S.checkout?checkoutView():menuView();
+  if(S.checkout)['nm','ph','ad','nt'].forEach(k=>{const e=document.getElementById(k);if(e)e.value=S.f[k]});
+  const show=!S.checkout&&count()>0;
+  $('#bar').classList.toggle('hidden',!show);
+  if(show)$('#cartBtn').innerHTML=`<span>View order · ${count()} item${count()>1?'s':''}</span><span>${R(total())}</span>`;
+}
+$('#cartBtn').onclick=()=>{S.err='';S.checkout=true;render();scrollTo(0,0)};
+render();
+</script>
+</body>
+</html>
