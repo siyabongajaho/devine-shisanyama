@@ -70,20 +70,30 @@ input[type=text],input[type=tel],textarea{width:100%;padding:12px;border-radius:
 /* ---- Edit these to change the shop ---- */
 const PHONE='27607639734';
 const MENU=[
+{id:'vans',c:'Kota',n:'Vans',d:'Chips, polony, atchaar or sauces',p:20},
+{id:'converse',c:'Kota',n:'Converse',d:'Chips, polony, cheese, half russian, atchaar/sauces',p:33},
 {id:'cortez',c:'Kota',n:'Cortez',d:'Chips, polony, cheese, egg, russian, atchaar/sauces',p:36},
 {id:'air',c:'Kota',n:'Air Forces',d:'Chips, polony, cheese, egg, vienna, russian, atchaar/sauces',p:45},
-{id:'diesel',c:'Kota',n:'Diesel',d:'Chips, polony, cheese, egg, rib patty, vienna, russian, atchaar/sauces',p:105},
+{id:'dunk',c:'Kota',n:'Air Dunk',d:'Chips, polony, cheese, egg, chicken patty, russian, atchaar/sauces',p:60},
+{id:'max',c:'Kota',n:'Air Max',d:'Chips, polony, cheese, egg, beef patty, vienna, russian, atchaar/sauces',p:70},
+{id:'replay',c:'Kota',n:'Replay',d:'Chips, polony, cheese, egg, rib patty, vienna, russian, atchaar/sauces',p:80},
+{id:'diesel',c:'Kota',n:'Diesel',d:'Chips, polony, cheese, egg, beef & rib patty, vienna, russian, atchaar/sauces',p:105},
+{id:'wrap',c:'Kota',n:'Kota Wrap',d:'Chips, polony, egg, cheese, beef patty, russian, vienna & sauces',p:75},
 {id:'pork',c:'Plates',n:'Pork plate',d:'Quarter leg, wors & pork rasher',p:85},
 {id:'rib',c:'Plates',n:'Rib plate',d:'Wors, short-rib & pork rasher',p:95},
 {id:'chicken',c:'Plates',n:'Full chicken plate',d:'Full chicken & pap',p:90},
 {id:'skopo',c:'Skopo & Ditlhakwana',n:'Skopo',d:'Sheep head',p:80},
 {id:'dit',c:'Skopo & Ditlhakwana',n:'Ditlhakwana',d:'4 pork trotters',p:50},
-{id:'ditp',c:'Skopo & Ditlhakwana',n:'Ditlhakwana plate',d:'4 pork trotters with pap',p:60}];
-// Custom kota prices are placeholders: set your real prices here
-const BASE=15;
-const FILL=[['Polony',3],['Cheese',4],['Egg',4],['Vienna',8],['Russian',8],['Rib patty',45]];
+{id:'ditp',c:'Skopo & Ditlhakwana',n:'Ditlhakwana plate',d:'4 pork trotters with pap',p:60},
+{id:'xchick',c:'Extras',n:'Chicken patty',d:'Extra for any kota',p:15},
+{id:'xbeef',c:'Extras',n:'Beef patty',d:'Extra for any kota',p:20},
+{id:'xsauce',c:'Extras',n:'Sauces',d:'Extra sauces',p:5},
+{id:'xvienna',c:'Extras',n:'Vienna',d:'Extra for any kota',p:10}];
+// Custom kota: patty and vienna prices are from the menu extras list. Polony, cheese, egg, russian and rib patty are still placeholders: set your real prices here. There is no base price, so a custom kota costs only the fillings picked
+const BASE=0;
+const FILL=[['Polony',3],['Cheese',4],['Egg',4],['Vienna',10],['Russian',8],['Chicken patty',15],['Beef patty',20],['Rib patty',45]];
 const SAUCE=['Atchaar','Chutney','Mayo','Hot sauce'];
-const CATS=['Kota','Plates','Skopo & Ditlhakwana'];
+const CATS=['Kota','Plates','Skopo & Ditlhakwana','Extras'];
 /* --------------------------------------- */
 const $=s=>document.querySelector(s);
 function shop(){
@@ -120,16 +130,17 @@ function menuView(){
 function builder(){
   const {fill,sauce}=S.sel;
   const price=BASE+FILL.filter(f=>fill.includes(f[0])).reduce((a,f)=>a+f[1],0);
-  return `<div class="build"><h3>Build your own kota</h3><p class="note" style="margin:4px 0 6px">Chips and bread included (${R(BASE)}). Pick your fillings.</p>`+
+  return `<div class="build"><h3>Build your own kota</h3><p class="note" style="margin:4px 0 6px">Chips and bread included. Pick your fillings.</p>`+
   FILL.map(f=>`<label class="chk"><span>${f[0]}</span><span>+${R(f[1])}</span><input type="checkbox" ${fill.includes(f[0])?'checked':''} onchange="tog('fill','${f[0]}')"></label>`).join('')+
-  `<p style="margin:12px 0 0;font-weight:600">Sauces (free)</p>`+
+  `<p style="margin:12px 0 0;font-weight:600">Sauces (free, pick at least one)</p>`+
   SAUCE.map(s=>`<label class="chk"><span>${s}</span><input type="checkbox" ${sauce.includes(s)?'checked':''} onchange="tog('sauce','${s}')"></label>`).join('')+
-  `<button class="primary"${shop().open?'':' disabled'} onclick="addCustom()">Add custom kota · ${R(price)}</button></div>`;
+  `<button class="primary"${shop().open&&fill.length&&sauce.length?'':' disabled'} onclick="addCustom()">${!fill.length?'Pick a filling to add':!sauce.length?'Pick a sauce to add':'Add custom kota · '+R(price)}</button></div>`;
 }
 function tog(k,v){const a=S.sel[k];const i=a.indexOf(v);i<0?a.push(v):a.splice(i,1);render()}
 function addCustom(){
   if(!shop().open)return render();
   const {fill,sauce}=S.sel;
+  if(!fill.length||!sauce.length)return;
   const p=BASE+FILL.filter(f=>fill.includes(f[0])).reduce((a,f)=>a+f[1],0);
   const d='Chips'+(fill.length?', '+fill.join(', '):'')+(sauce.length?' | Sauces: '+sauce.join(', '):' | No sauce');
   const key='custom:'+d;
